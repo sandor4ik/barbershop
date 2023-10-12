@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    <form class="form" method="POST" action="{% url 'customer-account' pk=user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div>
+            <label for="{{field.id_for_label}}">{{field.label}}</label>
+            {{field}}
+        </div>
+        {% endfor %}
+
+        <div>
+            <button type="submit">Update Your Info</button>
+        </div>
+    </form>
+    <div>
+        <a href="{% url 'change-password' pk=user.id %}">Update Your Password</a>
+    </div>
+</div>
+
+{% endblock content %}
