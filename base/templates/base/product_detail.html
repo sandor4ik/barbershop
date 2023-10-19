@@ -46,6 +46,23 @@
             font-size: 20px;
             margin-top: 10px;
         }
+
+        .cart-button {
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-family: 'Alegreya', sans-serif; 
+        font-weight: bold;
+        font-size: 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .cart-button:hover {
+        background-color: #333; /* Темно-серый цвет при наведении */
+    }
     </style>
 </head>
 <body>
@@ -55,6 +72,10 @@
             <h1 class="product-name">{{ product.name }}</h1>
             <p class="product-price">${{ product.price }}</p>
             <p class="product-description">{{ product.description }}</p>
+
+            <a href="{% url 'cart_page' %}">
+                <button data-product={{product.id}} data-action="add" class="cart-button update-cart">Add to cart</button>
+            </a>
         </div>
     </div>
 </body>

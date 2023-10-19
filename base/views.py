@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-from .models import Customer, BarberService, BarberShop, Barber, Appointment, Products
+from .models import Customer, BarberService, BarberShop, Barber, Appointment, Products, Order, OrderItem
 from .forms import MyCustomerCreationForm, CustomerForm, PasswordChangingForm
 
 
@@ -25,6 +25,52 @@ def productDetail(request, pk):
     product = get_object_or_404(Products, pk=pk)
     
     return render(request, 'base/product_detail.html', {'product': product})
+
+def cartPage(request):
+
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'ger_cart_total':0, 'get_cart_items':0}
+
+    context = {
+        'items': items,
+        'order': order,
+    }
+    return render(request, 'base/cart_page.html', context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('Action:', action)
+    print('ProductId:', productId)
+
+    customer = request.user
+    product = Products.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+    
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    return JsonResponse('Item was added', safe=False)
+
+def checkoutPage(request):
+
+    return render(request, 'base/checkout_page.html', {})
 
 def bookPage(request):
     barbershops = BarberShop.objects.all()
