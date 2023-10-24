@@ -92,10 +92,8 @@
             </div>
             <div class="container">
                 <div class="cart-link">
-                    {% if request.path == '/products/' %}
-                        <a href="{% url 'cart_page' %}" class="cart-link">My cart</a>
-                    {% elif request.path == '/products/cart/' %}
-                            <a href="{% url 'cart_page' %}" {% if '/products/cart/' in request.path %} class="active" {% endif %}>My cart</a>
+                    {% if '/products/' in request.path %}
+                        <a href="{% url 'cart_page' %}" {% if '/cart' in request.path %} class="active cart-link" {% endif %}>My cart</a>
                     {% endif %}
                 </div>
             </div>

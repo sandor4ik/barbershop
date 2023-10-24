@@ -70,7 +70,39 @@ def updateItem(request):
 
 def checkoutPage(request):
 
-    return render(request, 'base/checkout_page.html', {})
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'ger_cart_total':0, 'get_cart_items':0}
+
+    context = {
+        'items': items,
+        'order': order,
+    }
+
+    return render(request, 'base/checkout_page.html', context)
+
+def processOrder(request):
+    transaction_id = datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        customer = request.user
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        total = float(data['form']['total'])
+        order.transaction_id = transaction_id
+
+        if total == order.get_cart_total:
+            order.complete = True
+        order.save()
+
+    else:
+        print('User is not logged in..')
+
+    return JsonResponse('Order complete!', safe=False)
 
 def bookPage(request):
     barbershops = BarberShop.objects.all()

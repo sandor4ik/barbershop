@@ -72,10 +72,7 @@
             <h1 class="product-name">{{ product.name }}</h1>
             <p class="product-price">${{ product.price }}</p>
             <p class="product-description">{{ product.description }}</p>
-
-            <a href="{% url 'cart_page' %}">
-                <button data-product={{product.id}} data-action="add" class="cart-button update-cart">Add to cart</button>
-            </a>
+            <button data-product={{product.id}} data-action="add" class="cart-button update-cart">Add to cart</button>
         </div>
     </div>
 </body>
