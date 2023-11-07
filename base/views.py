@@ -14,7 +14,9 @@ from .forms import MyCustomerCreationForm, CustomerForm, PasswordChangingForm
 
 # Create your views here.
 def home(request):
-    return render(request, 'base/home.html')
+    barbers = Barber.objects.all()
+
+    return render(request, 'base/home.html', {'barbers': barbers})
 
 def productsPage(request):
     products = Products.objects.all()
@@ -103,6 +105,14 @@ def processOrder(request):
         print('User is not logged in..')
 
     return JsonResponse('Order complete!', safe=False)
+
+def ordersPage(request, customer_id):
+    orders = Order.objects.filter(customer_id=customer_id)
+
+    context ={
+        'orders': orders,
+    }
+    return render(request, 'base/orders_page.html', context)
 
 def bookPage(request):
     barbershops = BarberShop.objects.all()
@@ -275,3 +285,8 @@ def saveAppointment(request):
         del request.session["selected_time"]
 
         return render(request, 'base/save_appointment.html')
+    
+def appointmentsPage(request, full_name):
+    appointments = Appointment.objects.filter(full_name=full_name)
+
+    return render(request, 'base/appointments_page.html', {'appointments':appointments})

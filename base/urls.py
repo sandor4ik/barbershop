@@ -12,6 +12,7 @@ urlpatterns = [
     path('products/checkout/', views.checkoutPage, name='checkout_page'),
     path('update_item/', views.updateItem, name='update_item'),
     path('process_order/', views.processOrder, name='process_order'),
+    path('products/<int:customer_id>/orders_page/', views.ordersPage, name='orders_page'),
 
     path('register/', views.registerPage, name='register'),
     path('login/', views.loginPage, name='login'),
@@ -25,6 +26,8 @@ urlpatterns = [
     path('book/choose_time/', views.chooseTime, name='choose_time'),
     path('book/appointment_confirmation/', views.appointmentConfirmation, name='appointment_confirmation'),
     path('book/save_appointment/', views.saveAppointment, name='save_appointment'),
+    path('book/<str:full_name>/appointments_page/', views.appointmentsPage, name='appointments_page'),
+
 ]
 
 if settings.DEBUG:
