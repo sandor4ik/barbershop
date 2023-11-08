@@ -23,14 +23,13 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
 
         #about-us {
-            background-color: #fff;
-            padding: 30px;
+            padding: 50px;
             border-radius: 5px;
             margin-top: 20px;
             font-size: 18px;
@@ -45,7 +44,8 @@
         }
 
         #about-us img {
-            max-width: 500px;
+            width: 450px;
+            height: 250px;
             float: left;
             margin-right: 20px;
         }
@@ -65,11 +65,11 @@
 <body>
 
     <div class="container">
-        <section id="about-us">
+        <div id="about-us">
             <img src="{% static 'images/barbershop.jpg' %}" alt="Barbershop Image">
             <h2>About Us</h2>
             <p>Welcome to the finest barbershop in town. We take pride in providing top-notch grooming services that leave you looking and feeling your best. Our talented team of barbers is dedicated to delivering the best haircut and grooming experience.</p>
-        </section>
+        </div>
 
         <section id="staff">
             <h2>Our Staff</h2>
