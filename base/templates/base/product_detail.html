@@ -72,7 +72,11 @@
             <h1 class="product-name">{{ product.name }}</h1>
             <p class="product-price">${{ product.price }}</p>
             <p class="product-description">{{ product.description }}</p>
-            <button data-product={{product.id}} data-action="add" class="cart-button update-cart">Add to cart</button>
+            {% if user.is_authenticated %}
+                <button data-product={{product.id}} data-action="add" class="cart-button update-cart">Add to cart</button>
+            {% else %}    
+                <h2>Please register/login to access your cart </h2>
+            {% endif %}
         </div>
     </div>
 </body>

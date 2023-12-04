@@ -92,10 +92,14 @@
             </div>
             <div class="container">
                 {% if '/products/' in request.path %}
-                    <a href="{% url 'cart_page' %}" {% if '/cart' in request.path %} class="active other-links" {% endif %}>My cart</a>
-                    <a href="{% url 'orders_page' customer_id=user.id %}" {% if '/orders' in request.path %} class="active other-links" {% endif %}>My orders</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'cart_page' %}" {% if '/cart' in request.path %} class="active other-links" {% endif %}>My cart</a>
+                        <a href="{% url 'orders_page' customer_id=user.id %}" {% if '/orders' in request.path %} class="active other-links" {% endif %}>My orders</a>
+                    {% endif %}
                 {% elif '/book/' in request.path %}
-                    <a href="{% url 'appointments_page' full_name=user.full_name %}" {% if '/appointments_page' in request.path %} class="active other-links" {% endif %}>My appointments</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'appointments_page' full_name=user.full_name %}" {% if '/appointments_page' in request.path %} class="active other-links" {% endif %}>My appointments</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

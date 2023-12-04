@@ -1,3 +1,4 @@
-/staticfiles
+.env
+backup.sql
 data.json
 db.sqlite3
